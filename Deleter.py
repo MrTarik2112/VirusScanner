@@ -6,17 +6,17 @@ import os
 class FileEncryptorDecryptor:
     def __init__(self, master):
         self.master = master
-        self.master.title("Virüs Şifreleyici")
+        self.master.title("Virus Encryptor")
         self.master.geometry("400x200")
-        self.master.config(bg="#2C3E50")  # Arka plan rengi
+        self.master.config(bg="#2C3E50")  # Background color
         
-        self.label = tk.Label(self.master, text="Şifrele/Çöz", fg="#FFFFFF", bg="#2C3E50", font=("Arial", 16, "bold"))
+        self.label = tk.Label(self.master, text="Encrypt/Decrypt", fg="#FFFFFF", bg="#2C3E50", font=("Arial", 16, "bold"))
         self.label.pack(pady=10)
         
-        self.encrypt_button = tk.Button(self.master, text="Virüs Şifrele (1 dk)", command=self.encrypt_file, width=20, height=2, bg="#3498DB", fg="#FFFFFF", font=("Arial", 12))
+        self.encrypt_button = tk.Button(self.master, text="Encrypt Virus (1 min)", command=self.encrypt_file, width=20, height=2, bg="#3498DB", fg="#FFFFFF", font=("Arial", 12))
         self.encrypt_button.pack(pady=10)
         
-        self.decrypt_button = tk.Button(self.master, text="Virüsü Serbest bırak (önerilmez)", command=self.decrypt_file, width=25, height=2, bg="#E74C3C", fg="#FFFFFF", font=("Arial", 12))
+        self.decrypt_button = tk.Button(self.master, text="Release Virus (not recommended)", command=self.decrypt_file, width=25, height=2, bg="#E74C3C", fg="#FFFFFF", font=("Arial", 12))
         self.decrypt_button.pack(pady=5)
         
     def encrypt_file(self):
@@ -36,10 +36,10 @@ class FileEncryptorDecryptor:
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "encrypted_scanned_files.txt"), "wb") as encrypted_file:
                 encrypted_file.write(encrypted_data)
                 
-            messagebox.showinfo("Başarılı", "Virüs Başarıyla Şifrelendi")
+            messagebox.showinfo("Success", "Virus Successfully Encrypted")
     
     def decrypt_file(self):
-        file_path = filedialog.askopenfilename(initialdir="/", title="Şifreli Dosya Seç", filetypes=(("Tüm Dosyalar", "*.*"),))
+        file_path = filedialog.askopenfilename(initialdir="/", title="Select Encrypted File", filetypes=(("All Files", "*.*"),))
         if file_path:
             key_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "thekey.key")
             with open(key_file_path, "rb") as key_file:
@@ -59,13 +59,13 @@ class FileEncryptorDecryptor:
                     
             os.remove(file_path)
             
-            messagebox.showinfo("Başarılı", "Dosya başarıyla çözüldü. Çözülen dosya: {}".format(output_file_path))
+            messagebox.showinfo("Success", "File successfully decrypted. Decrypted file: {}".format(output_file_path))
     
     def search_file(self, filename):
         for root, dirs, files in os.walk("C:\\"):
             if filename in files:
                 return os.path.join(root, filename)
-        messagebox.showerror("Hata", "Dosya bulunamadı.")
+        messagebox.showerror("Error", "File not found.")
 
 def main():
     root = tk.Tk()
